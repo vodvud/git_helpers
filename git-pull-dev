@@ -1,0 +1,42 @@
+#!/bin/bash
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+cd $PWD
+
+BS="\033[1m"
+BE="\033[0m"
+
+exit_on_error() {
+    exit_code=$1
+    if [ $exit_code -ne 0 ]; then
+        >&2 echo -e $BS"Command failed with exit code ${exit_code}."$BE
+        exit $exit_code
+    fi
+}
+
+if [ "$BRANCH" == "" ]; then
+  echo "... Error: empty branch"
+else
+  if [ "$BRANCH" == "dev" ]; then
+    echo "... Error: current branch is 'dev'"
+  else  
+    echo "--------------------------------------------------------"
+    echo -e $BS"Run command: pull origin "$BRANCH" (update "$BRANCH")"$BE
+    echo "--------------------------------------------------------"
+    git pull --no-commit origin $BRANCH
+    exit_on_error $? !!
+    git add -A
+    git commit -m "Marge branch '"$BRANCH"'"
+    echo "--------------------------------------------------------"
+    echo -e $BS"Run command: pull origin dev (merge dev to "$BRANCH")"$BE
+    echo "--------------------------------------------------------"
+    git pull --no-commit origin dev
+    exit_on_error $? !!
+    git add -A
+    git commit -m "Marge branch 'dev' to '"$BRANCH"'"
+    echo "--------------------------------------------------------"
+    echo -e $BS"Run command: push origin "$BRANCH$BE
+    echo "--------------------------------------------------------"
+    git push origin $BRANCH
+  fi
+fi

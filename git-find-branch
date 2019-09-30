@@ -1,0 +1,17 @@
+#!/bin/bash
+
+BRANCH=$1
+cd $PWD
+
+BS="\033[1m"
+BE="\033[0m"
+
+if [ "$BRANCH" == "" ]; then
+  echo "... Error: empty branch"
+else
+  git fetch origin
+  echo "--------------------------------------------------------"
+  echo -e $BS"Result:"$BE
+  git branch --all | grep "$BRANCH"
+  echo "--------------------------------------------------------"
+fi

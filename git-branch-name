@@ -1,0 +1,10 @@
+#!/bin/bash
+
+BS="\033[1m"
+BE="\033[0m"
+
+cd $PWD
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+echo -e "Current branch:$BS ${BRANCH}"$BE

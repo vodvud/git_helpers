@@ -1,0 +1,30 @@
+#!/bin/bash
+
+BRANCH=$1
+cd $PWD
+
+BS="\033[1m"
+BE="\033[0m"
+
+exit_on_error() {
+    exit_code=$1
+    if [ $exit_code -ne 0 ]; then
+        >&2 echo -e $BS"Command failed with exit code ${exit_code}."$BE
+        exit $exit_code
+    fi
+}
+
+if [ "$BRANCH" == "" ]; then
+  echo "... Error: empty branch"
+else
+  git fetch origin
+  EXISTS=$(git branch -a | egrep "$BRANCH$")
+  
+  if [ "$EXISTS" == "" ]; then
+    echo "... Error: undefined branch $BRANCH"
+  else
+    git checkout $BRANCH
+    exit_on_error $? !!
+    git pull origin $BRANCH
+  fi
+fi
