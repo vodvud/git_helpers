@@ -1,7 +1,9 @@
 #!/bin/bash
 
-BS="\033[1m"
-BE="\033[0m"
+SCRIPTSRC=`readlink -f "$0" || echo "$0"`
+RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
+
+source ${RUN_PATH}/_git_def.sh
 
 cd $PWD
 
