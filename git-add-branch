@@ -5,16 +5,21 @@ RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
 
 source ${RUN_PATH}/_git_def.sh
 
-MAIN='dev'
 BRANCH=$1
 cd $PWD
+
+if [ -f './.git/branch_dev' ]; then
+  BRANCH_DEV=$(cat './.git/branch_dev')
+else
+  BRANCH_DEV='dev'
+fi
 
 if [ "$BRANCH" == "" ]; then
   echo "... Error: empty branch"
 else
-  git checkout $MAIN
+  git checkout $BRANCH_DEV
   exit_on_error $? !!
-  git pull origin $MAIN
+  git pull origin $BRANCH_DEV
   exit_on_error $? !!
   git checkout -b $BRANCH
   exit_on_error $? !!

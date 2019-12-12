@@ -8,11 +8,17 @@ source ${RUN_PATH}/_git_def.sh
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 cd $PWD
 
+if [ -f './.git/branch_dev' ]; then
+  BRANCH_DEV=$(cat './.git/branch_dev')
+else
+  BRANCH_DEV='dev'
+fi
+
 if [ "$BRANCH" == "" ]; then
   echo "... Error: empty branch"
 else
-  if [ "$BRANCH" == "dev" ]; then
-    echo "... Error: current branch is 'dev'"
+  if [ "$BRANCH" == "$BRANCH_DEV" ]; then
+    echo "... Error: you are already in dev branch '$BRANCH_DEV'"
   else  
     echo "--------------------------------------------------------"
     echo -e $BS"Run command: pull origin "$BRANCH" (update "$BRANCH")"$BE
@@ -20,14 +26,14 @@ else
     git pull --no-commit origin $BRANCH
     exit_on_error $? !!
     git add -A
-    git commit -m "Marge branch '"$BRANCH"'"
+    git commit -m "Merge branch '"$BRANCH"'"
     echo "--------------------------------------------------------"
-    echo -e $BS"Run command: pull origin dev (merge dev to "$BRANCH")"$BE
+    echo -e $BS"Run command: pull origin $BRANCH_DEV (merge $BRANCH_DEV to "$BRANCH")"$BE
     echo "--------------------------------------------------------"
-    git pull --no-commit origin dev
+    git pull --no-commit origin $BRANCH_DEV
     exit_on_error $? !!
     git add -A
-    git commit -m "Marge branch 'dev' to '"$BRANCH"'"
+    git commit -m "Merge branch '$BRANCH_DEV' to '"$BRANCH"'"
     echo "--------------------------------------------------------"
     echo -e $BS"Run command: push origin "$BRANCH$BE
     echo "--------------------------------------------------------"
