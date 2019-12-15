@@ -5,8 +5,8 @@ RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
 
 source ${RUN_PATH}/_git_def.sh
 
-BRANCH=$1
 cd $PWD
+BRANCH=$1
 
 if [ -f './.git/branch_dev' ]; then
   BRANCH_DEV=$(cat './.git/branch_dev')

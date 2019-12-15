@@ -5,8 +5,8 @@ RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
 
 source ${RUN_PATH}/_git_def.sh
 
-BRANCH=$(git rev-parse --abbrev-ref HEAD)
 cd $PWD
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 if [ -f './.git/branch_dev' ]; then
   BRANCH_DEV=$(cat './.git/branch_dev')

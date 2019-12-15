@@ -5,9 +5,9 @@ RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
 
 source ${RUN_PATH}/_git_def.sh
 
+cd $PWD
 TAG=$1
 MSG=$2
-cd $PWD
 
 if [ "$TAG" == "" ]; then
   echo "... Error: empty tag name"

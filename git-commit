@@ -5,8 +5,8 @@ RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
 
 source ${RUN_PATH}/_git_def.sh
 
-MSG=$1
 cd $PWD
+MSG=$1
 
 if [ "$MSG" == "" ]; then
   echo "... Error: empty commit message"

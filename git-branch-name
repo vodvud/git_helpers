@@ -6,7 +6,6 @@ RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
 source ${RUN_PATH}/_git_def.sh
 
 cd $PWD
-
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 echo -e "Current branch:$BS ${BRANCH}"$BE
