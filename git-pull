@@ -1,0 +1,38 @@
+#!/bin/bash
+
+SCRIPTSRC=`readlink -f "$0" || echo "$0"`
+RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
+
+source ${RUN_PATH}/_git_def.sh
+
+cd $PWD
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "$BRANCH" == "" ]; then
+  echo "... Error: empty branch"
+else
+  echo "--------------------------------------------------------"
+  echo -e $BS"Run command: pull origin "$BRANCH" (update "$BRANCH")"$BE
+  echo "--------------------------------------------------------"
+  git pull --no-commit origin $BRANCH
+  exit_on_error $? !!
+  git add -A
+  git commit -m "Merge branch '"$BRANCH"'"
+  
+  if [ "$1" != "" ]; then
+    BRANCH_PULL=$1
+    
+    echo "--------------------------------------------------------"
+    echo -e $BS"Run command: pull origin $BRANCH_PULL (merge $BRANCH_PULL to "$BRANCH")"$BE
+    echo "--------------------------------------------------------"
+    git pull --no-commit origin $BRANCH_PULL
+    exit_on_error $? !!
+    git add -A
+    git commit -m "Merge branch '$BRANCH_PULL' to '"$BRANCH"'"
+  fi
+  
+  echo "--------------------------------------------------------"
+  echo -e $BS"Run command: push origin "$BRANCH$BE
+  echo "--------------------------------------------------------"
+  git push origin $BRANCH
+fi
