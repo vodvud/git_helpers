@@ -8,12 +8,12 @@ source ${RUN_PATH}/_git_def.sh
 cd $PWD
 BRANCH=$1
 
-if [ "$BRANCH" == "" ]; then
+if [ "${BRANCH}" == "" ]; then
   echo "... Error: empty branch"
 else
   git fetch origin
   echo "--------------------------------------------------------"
   echo -e $BS"Result:"$BE
-  git branch --all | grep "$BRANCH"
+  git branch --all | grep "${BRANCH}"
   echo "--------------------------------------------------------"
 fi

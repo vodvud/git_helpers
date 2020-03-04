@@ -6,7 +6,12 @@ RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
 source ${RUN_PATH}/_git_def.sh
 
 cd $PWD
-BRANCH=$1
+
+if [ -f "${BRANCH_DEV_FILE}" ]; then
+  BRANCH=$(cat "${BRANCH_DEV_FILE}")
+else
+  BRANCH='dev'
+fi
 
 if [ "${BRANCH}" == "" ]; then
   echo "... Error: empty branch"

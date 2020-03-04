@@ -1,0 +1,24 @@
+#!/bin/bash
+
+SCRIPTSRC=`readlink -f "$0" || echo "$0"`
+RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
+
+source ${RUN_PATH}/_git_def.sh
+
+cd $PWD
+
+if [ "$1" == "" ]; then
+  BRANCH=$(git rev-parse --abbrev-ref HEAD)
+  echo "-- Taken current branch '"${BRANCH}"'"
+  echo ""
+else
+  BRANCH=$1
+fi
+
+if [ ! -f "${BRANCH_DEV_FILE}" ]; then
+  touch "${BRANCH_DEV_FILE}"
+fi
+
+echo "${BRANCH}" > "${BRANCH_DEV_FILE}"
+
+echo -e $BS"Set '"${BRANCH}"' as dev branch"$BE

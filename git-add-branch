@@ -8,20 +8,20 @@ source ${RUN_PATH}/_git_def.sh
 cd $PWD
 BRANCH=$1
 
-if [ -f './.git/branch_dev' ]; then
-  BRANCH_DEV=$(cat './.git/branch_dev')
+if [ -f "${BRANCH_DEV_FILE}" ]; then
+  BRANCH_DEV=$(cat "${BRANCH_DEV_FILE}")
 else
   BRANCH_DEV='dev'
 fi
 
-if [ "$BRANCH" == "" ]; then
+if [ "${BRANCH}" == "" ]; then
   echo "... Error: empty branch"
 else
-  git checkout $BRANCH_DEV
+  git checkout ${BRANCH_DEV}
   exit_on_error $? !!
-  git pull origin $BRANCH_DEV
+  git pull origin ${BRANCH_DEV}
   exit_on_error $? !!
-  git checkout -b $BRANCH
+  git checkout -b ${BRANCH}
   exit_on_error $? !!
-  git push origin $BRANCH
+  git push origin ${BRANCH}
 fi

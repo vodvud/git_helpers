@@ -8,12 +8,12 @@ source ${RUN_PATH}/_git_def.sh
 cd $PWD
 MSG=$1
 
-if [ "$MSG" == "" ]; then
+if [ "${MSG}" == "" ]; then
   echo "... Error: empty commit message"
 else
   BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
   git add -A
-  git commit -m "$MSG"
-  git push origin $BRANCH
+  git commit -m "${MSG}"
+  git push origin ${BRANCH}
 fi

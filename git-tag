@@ -9,14 +9,14 @@ cd $PWD
 TAG=$1
 MSG=$2
 
-if [ "$TAG" == "" ]; then
+if [ "${TAG}" == "" ]; then
   echo "... Error: empty tag name"
 else
-  if [ "$MSG" == "" ]; then 
-    git tag $TAG
+  if [ "${MSG}" == "" ]; then 
+    git tag ${TAG}
   else
-    git tag -a $TAG -m "$MSG"
+    git tag -a ${TAG} -m "${MSG}"
   fi
   exit_on_error $? !!
-  git push origin $TAG
+  git push origin ${TAG}
 fi
