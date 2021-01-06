@@ -1,0 +1,26 @@
+#!/bin/bash
+
+SCRIPTSRC=`readlink -f "$0" || echo "$0"`
+RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
+
+source ${RUN_PATH}/_git_flow_cmd.sh
+source ${RUN_PATH}/_git_def.sh
+
+MSG=$1
+NAME=$(git_flow_get_name 'feature')
+
+if [[ "${MSG}" != "" ]]; then
+    git add -A
+    git commit -m "${NAME} ${MSG}"
+    exit_on_error $? !!
+fi
+
+git_flow_cmd_init 'feature' 'finish' "${NAME}"
+exit_on_error $? !!
+
+git-pull
+exit_on_error $? !!
+
+if [[ "$2" != "--local" ]]; then
+    git-push
+fi

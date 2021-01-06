@@ -1,0 +1,15 @@
+#!/bin/bash
+
+SCRIPTSRC=`readlink -f "$0" || echo "$0"`
+RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
+
+source ${RUN_PATH}/_git_flow_cmd.sh
+source ${RUN_PATH}/_git_def.sh
+
+git-checkout master
+exit_on_error $? !!
+
+git-checkout develop
+exit_on_error $? !!
+
+git_flow_cmd_init 'release' 'start' "$1"

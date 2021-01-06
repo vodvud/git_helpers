@@ -10,7 +10,7 @@ cd $PWD
 if [ -f "${BRANCH_DEV_FILE}" ]; then
   BRANCH=$(cat "${BRANCH_DEV_FILE}")
 else
-  BRANCH='dev'
+  BRANCH='develop'
 fi
 
 if [ "${BRANCH}" == "" ]; then
@@ -24,6 +24,6 @@ else
   else
     git checkout ${BRANCH}
     exit_on_error $? !!
-    git pull origin ${BRANCH}
+    git pull --rebase origin ${BRANCH}
   fi
 fi

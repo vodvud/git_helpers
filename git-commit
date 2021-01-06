@@ -11,9 +11,18 @@ MSG=$1
 if [ "${MSG}" == "" ]; then
   echo "... Error: empty commit message"
 else
-  BRANCH=$(git rev-parse --abbrev-ref HEAD)
+  AMEND=''
+  if [[ "$2" == "-a" ]]; then
+    AMEND='--amend'
+  fi
 
   git add -A
-  git commit -m "${MSG}"
-  git push origin ${BRANCH}
+  git commit -m "${MSG}" ${AMEND}
+  exit_on_error $? !!
+
+  if [[ "$2" == "-p" ]]; then
+    git-pull
+    exit_on_error $? !!
+    git-push
+  fi
 fi

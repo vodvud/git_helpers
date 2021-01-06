@@ -1,0 +1,14 @@
+#!/bin/bash
+
+SCRIPTSRC=`readlink -f "$0" || echo "$0"`
+RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
+
+source ${RUN_PATH}/_git_flow_cmd.sh
+
+NAME=$1
+
+if [ "${NAME}" == "" ]; then
+    NAME=$(git_flow_get_name 'bugfix')
+fi
+
+git_flow_cmd_init 'bugfix' 'delete' "${NAME}"

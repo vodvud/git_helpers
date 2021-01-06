@@ -19,6 +19,6 @@ else
   else
     git checkout ${BRANCH}
     exit_on_error $? !!
-    git pull origin ${BRANCH}
+    git pull --rebase origin ${BRANCH}
   fi
 fi

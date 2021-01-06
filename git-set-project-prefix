@@ -1,0 +1,24 @@
+#!/bin/bash
+
+SCRIPTSRC=`readlink -f "$0" || echo "$0"`
+RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
+
+source ${RUN_PATH}/_git_def.sh
+
+cd $PWD
+
+if [ "$1" == "" ]; then
+  PROJECT_PREFIX=""
+  echo "-- Taken empty prefix"
+  echo ""
+else
+  PROJECT_PREFIX=$1
+fi
+
+if [ ! -f "${PROJECT_PREFIX_FILE}" ]; then
+  touch "${PROJECT_PREFIX_FILE}"
+fi
+
+echo "${PROJECT_PREFIX}" > "${PROJECT_PREFIX_FILE}"
+
+echo -e $BS"Set '"${PROJECT_PREFIX}"' as project prefix"$BE

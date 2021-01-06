@@ -1,0 +1,12 @@
+#!/bin/bash
+
+SCRIPTSRC=`readlink -f "$0" || echo "$0"`
+RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
+
+source ${RUN_PATH}/_git_def.sh
+
+cd $PWD
+
+git add -A
+git rebase --continue
+exit_on_error $? !!

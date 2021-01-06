@@ -4,6 +4,7 @@ BS="\033[1m"
 BE="\033[0m"
 
 BRANCH_DEV_FILE='./.git/branch_dev'
+PROJECT_PREFIX_FILE='./.git/project_prefix'
 
 exit_on_error() {
     exit_code=$1

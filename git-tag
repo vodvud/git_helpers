@@ -6,17 +6,31 @@ RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
 source ${RUN_PATH}/_git_def.sh
 
 cd $PWD
-TAG=$1
-MSG=$2
 
-if [ "${TAG}" == "" ]; then
+DEL=false
+MSG=''
+
+if [[ "$1" == "-d" ]]; then
+  DEL=true
+  TAG=$2
+else    
+  TAG=$1
+  MSG=$2
+fi
+
+if [[ "${TAG}" == "" ]]; then
   echo "... Error: empty tag name"
 else
-  if [ "${MSG}" == "" ]; then 
-    git tag ${TAG}
+  if [[ ${DEL} == true ]]; then
+    git tag -d ${TAG}
+    git push origin :refs/tags/${TAG}
   else
-    git tag -a ${TAG} -m "${MSG}"
+    if [[ "${MSG}" == "" ]]; then 
+      git tag ${TAG}
+    else
+      git tag -a ${TAG} -m "${MSG}"
+    fi
+    exit_on_error $? !!
+    git push origin ${TAG}
   fi
-  exit_on_error $? !!
-  git push origin ${TAG}
 fi

@@ -5,34 +5,27 @@ RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
 
 source ${RUN_PATH}/_git_def.sh
 
-cd $PWD
+DIR="$PWD"
+cd ${DIR}
+
 BRANCH_CURRENT=$(git rev-parse --abbrev-ref HEAD)
 
-if [ "${BRANCH_CURRENT}" == "" ]; then
+if [[ "${BRANCH_CURRENT}" == "" ]]; then
   echo "... Error: empty branch"
 else
   echo "--------------------------------------------------------"
   echo -e $BS"Run command: pull origin "${BRANCH_CURRENT}" (update "${BRANCH_CURRENT}")"$BE
   echo "--------------------------------------------------------"
-  git pull --no-commit origin ${BRANCH_CURRENT}
+  git pull --rebase origin ${BRANCH_CURRENT}
   exit_on_error $? !!
-  git add -A
-  git commit -m "Merge branch '"${BRANCH_CURRENT}"'"
   
-  if [ "$1" != "" ]; then
+  if [[ "$1" != "" ]]; then
     BRANCH_PULL=$1
     
     echo "--------------------------------------------------------"
     echo -e $BS"Run command: pull origin ${BRANCH_PULL} (merge ${BRANCH_PULL} to "${BRANCH_CURRENT}")"$BE
     echo "--------------------------------------------------------"
-    git pull --no-commit origin ${BRANCH_PULL}
+    git pull --rebase origin ${BRANCH_PULL}
     exit_on_error $? !!
-    git add -A
-    git commit -m "Merge branch '${BRANCH_PULL}' to '"${BRANCH_CURRENT}"'"
   fi
-  
-  echo "--------------------------------------------------------"
-  echo -e $BS"Run command: push origin "${BRANCH_CURRENT}$BE
-  echo "--------------------------------------------------------"
-  git push origin ${BRANCH_CURRENT}
 fi

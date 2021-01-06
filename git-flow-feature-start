@@ -1,0 +1,31 @@
+#!/bin/bash
+
+SCRIPTSRC=`readlink -f "$0" || echo "$0"`
+RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
+
+source ${RUN_PATH}/_git_flow_cmd.sh
+source ${RUN_PATH}/_git_def.sh
+
+
+if [ -f "${PROJECT_PREFIX_FILE}" ]; then
+  PROJECT_PREFIX=$(cat "${PROJECT_PREFIX_FILE}")
+else
+  PROJECT_PREFIX=''
+fi
+
+
+if [ "$1" != "" ]; then
+  NAME="${PROJECT_PREFIX}$1"
+else
+  NAME=''
+fi
+
+if [ "$2" != "" ]; then
+  BASE_BRANCH="feature/${PROJECT_PREFIX}$2"
+  git-checkout "${BASE_BRANCH}"
+  exit_on_error $? !!
+else
+  BASE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+fi
+
+git_flow_cmd_init 'feature' 'start' "${NAME}" "${BASE_BRANCH}"

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+SCRIPTSRC=`readlink -f "$0" || echo "$0"`
+RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
+
+source ${RUN_PATH}/_git_flow_cmd.sh
+
+git-checkout-dev
+git_flow_cmd_init 'bugfix' 'start' "$1"
