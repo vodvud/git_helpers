@@ -9,13 +9,16 @@ source ${RUN_PATH}/_git_def.sh
 
 NAME=$(git_flow_get_name 'release')
 
-git_flow_cmd_init 'release' 'finish' "${NAME}"
+git_flow_cmd_init 'release' 'finish' "${NAME}" -m "Tagging version ${NAME}"
+exit_on_error $? !!
+
+git-pull
 exit_on_error $? !!
 
 git-push
 exit_on_error $? !!
 
-git checkout master
+git-checkout master
 exit_on_error $? !!
 
 git-push

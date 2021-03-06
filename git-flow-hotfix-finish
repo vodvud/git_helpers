@@ -15,7 +15,16 @@ if [[ "${MSG}" != "" ]]; then
     exit_on_error $? !!
 fi
 
-git_flow_cmd_init 'hotfix' 'finish' "${NAME}"
+git_flow_cmd_init 'hotfix' 'finish' "${NAME}" -m "Tagging hotfix ${NAME}"
+exit_on_error $? !!
+
+git-pull
+exit_on_error $? !!
+
+git-push
+exit_on_error $? !!
+
+git-checkout master
 exit_on_error $? !!
 
 git-push

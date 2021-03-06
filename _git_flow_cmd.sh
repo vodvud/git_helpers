@@ -15,8 +15,13 @@ git_flow_cmd_init() {
     TYPE=$1
     COMMAND=$2
     NAME=$3
-    BASE_BRANCH=$4
-    USAGE="Usage: git-flow-${TYPE} [command] [${TYPE} name] [base branch]"
+    
+    OPTIONS=""
+    for i in $(seq 4 $#); do
+        OPTIONS="${OPTIONS} ${!i}"
+    done
+    
+    USAGE="Usage: git-flow-${TYPE} [command] [${TYPE} name] [options]"
 
     if [ "${COMMAND}" == "" ]; then
         echo "Error: empty command"
@@ -36,7 +41,7 @@ git_flow_cmd_init() {
                 NAME="origin ${NAME}"
             fi
 
-            git flow ${TYPE} ${COMMAND} ${NAME} ${BASE_BRANCH}
+            git flow ${TYPE} ${COMMAND} ${NAME}${OPTIONS}
         fi
     fi
 }

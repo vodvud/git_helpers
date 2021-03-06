@@ -10,12 +10,12 @@ MSG=$1
 if [ "${MSG}" == "" ]; then
     echo "Error: empty commit message"
     echo ""
-    echo "  Usage: git-flow-bugfix-publish 'commit message'"
+    echo "  Usage: git-flow-hotfix-publish 'commit message'"
     echo ""
 else
-    NAME=$(git_flow_get_name 'bugfix')
+    NAME=$(git_flow_get_name 'hotfix')
 
     git add -A
     git commit -m "${NAME} ${MSG}"
-    git_flow_cmd_init 'bugfix' 'publish' "${NAME}"
+    git_flow_cmd_init 'hotfix' 'publish' "${NAME}"
 fi

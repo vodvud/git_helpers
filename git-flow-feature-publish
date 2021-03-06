@@ -16,6 +16,6 @@ else
     NAME=$(git_flow_get_name 'feature')
 
     git add -A
-    git commit -m "${MSG}"
+    git commit -m "${NAME} ${MSG}"
     git_flow_cmd_init 'feature' 'publish' "${NAME}"
 fi
